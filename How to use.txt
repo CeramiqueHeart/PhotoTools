@@ -1,0 +1,20 @@
+﻿0. 以下のコマンドでexifrをインストールする。
+
+   gem install exifr
+
+
+1. photoscan.rb を実行し、対象フォルダ内の JPG・MOV・MP4  ファイルの
+   属性情報を収集し、photoscan.db ファイルを作成する。
+
+   ruby photoscan.rb <TARGET>
+
+2. photocheck.rb を実行し、対象フォルダ内の JPG・MOV・MP4 ファイルと
+   同じファイル名・属性情報をもったファイルが 1) でスキャンした
+   フォルダ内に存在するかチェックする。
+   存在しなかったファイルは "not found" が表示される。
+
+   ruby photocheck.rb <TARGET>
+
+   ※ チェックされる属性情報
+      JPG ……………  Exif 情報に基づくオリジナルの撮影時刻
+      MOV・MP4  …… ファイルの最終更新時刻
