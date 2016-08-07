@@ -1,22 +1,25 @@
 require 'exifr'
 
-src_dir = File.expand_path(ARGV[0])
-data = Hash.new
+file_type = ["jpg", "jpeg", "mov", "mp4"]
+data      = Hash.new
 
-Dir::glob(src_dir + '/**/*.JPG').each do |file|
-    puts file
-    unless data.has_key?(File.basename(file))
-        data[File.basename(file)] = Array.new
-    end
-    data[File.basename(file)].push(EXIFR::JPEG.new(file).date_time_original)
+file_type.map! do |item|
+  item = "**/*." + item
 end
 
-Dir::glob(src_dir + '/**/*.MOV').each do |file|
+Dir.chdir(ARGV[0]) do
+  Dir.glob(file_type, File::FNM_CASEFOLD) do |file|
     puts file
     unless data.has_key?(File.basename(file))
         data[File.basename(file)] = Array.new
     end
-    data[File.basename(file)].push(File.mtime(file))
+    if File.extname(file).downcase == '.jpg' or
+       File.extname(file).downcase == '.jpeg'
+      data[File.basename(file)].push(EXIFR::JPEG.new(file).date_time_original)
+    else
+      data[File.basename(file)].push(File.mtime(file))
+   end
+  end
 end
 
 File.open("photoscan.db", "wb") do |file|
