@@ -1,7 +1,9 @@
-﻿0. 以下のコマンドでexifrをインストールする。
+﻿0.1. ffpmegをインストールしbinフォルダへのパスを通す。
+
+0.2. 以下のコマンドで必要なgemをインストールする。
 
    gem install exifr
-
+   gem install streamio-ffmpeg
 
 1. photoscan.rb を実行し、対象フォルダ内の JPG・MOV・MP4  ファイルの
    属性情報を収集し、photoscan.db ファイルを作成する。
