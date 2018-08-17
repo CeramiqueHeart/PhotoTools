@@ -1,4 +1,5 @@
-require 'exifr'
+require 'exifr/jpeg'
+require 'streamio-ffmpeg'
 
 file_type = ["jpg", "jpeg", "mov", "mp4"]
 data      = Hash.new
@@ -17,8 +18,8 @@ Dir.chdir(ARGV[0]) do
        File.extname(file).downcase == '.jpeg'
       data[File.basename(file)].push(EXIFR::JPEG.new(file).date_time_original)
     else
-      data[File.basename(file)].push(File.mtime(file))
-   end
+      data[File.basename(file)].push(FFMPEG::Movie.new(file).creation_time)
+    end
   end
 end
 
